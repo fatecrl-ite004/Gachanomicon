@@ -1,73 +1,69 @@
-# React + TypeScript + Vite
+# Gachanomicon
+## Descrição
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+O Gachanomicon é uma plataforma voltada para jogadores de jogos gacha, oferecendo uma base de dados centralizada contendo informações sobre jogos, além de guias produzidos pela comunidade.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+### Objetivos
+- Centralizar informações sobre jogos gacha;
+- Disponibilizar guias criados pelos usuários;
+- Facilitar a descoberta de conteúdos relevantes.
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Tecnologias
+- React
+- TypeScript
+- Vite
+- API REST (planejada)
+- MongoDB (planejado)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Status atual:
+Protótipo inicial desenvolvido utilizando dados simulados (mockados). Design em andamento e não finalizado.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Recursos necessários
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Para executar o protótipo são necessários:
+
+- Node.js (v22 ou superior) incluindo o npm, utilizado para instalação das dependências e execução do projeto;
+- Navegador web moderno;
+- Conexão com internet apenas para instalação inicial das dependências.
+
+Atualmente, a aplicação utiliza dados simulados, não exigindo backend ou banco de dados para demonstração.
+
+### Instalação
+
+#### Clone o repositório:
+
+``` 
+git clone https://github.com/fatecrl-ite004/Gachanomicon
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+#### Acesse a pasta:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```
+cd gachanomicon
+```
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+#### Instale as dependências:
+
+```
+npm install
+```
+
+#### Execute o projeto:
+
+```
+npm run dev
+```
+
+#### Abra no navegador:
+
+```
+http://localhost:5173
 ```
