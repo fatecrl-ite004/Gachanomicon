@@ -21,12 +21,12 @@ const games: Game[] = [
     id: 1,
     name: "Genshin Impact",
     developer: "HoYoverse",
-    genre: "Action RPG",
+    genre: "RPG de Ação",
     guides: 124,
     activeUsers: 3421,
     characters: 73,
     rarity: 5,
-    status: "Trending",
+    status: "Tendência",
     accent: "sunset",
     image: null,
     blurb: "Exploração, combate elemental e comunidade gigante.",
@@ -35,7 +35,7 @@ const games: Game[] = [
     id: 2,
     name: "Honkai: Star Rail",
     developer: "HoYoverse",
-    genre: "Turn-Based RPG",
+    genre: "RPG de Turnos",
     guides: 98,
     activeUsers: 2104,
     characters: 56,
@@ -49,12 +49,12 @@ const games: Game[] = [
     id: 3,
     name: "Zenless Zone Zero",
     developer: "HoYoverse",
-    genre: "Action RPG",
+    genre: "RPG de Ação",
     guides: 57,
     activeUsers: 1203,
     characters: 31,
     rarity: 5,
-    status: "New",
+    status: "Novo",
     accent: "cyan",
     image: null,
     blurb: "Estilo urbano, combate rápido e identidade forte.",
@@ -63,12 +63,12 @@ const games: Game[] = [
     id: 4,
     name: "NIKKE",
     developer: "SHIFT UP",
-    genre: "Third-Person Shooter",
+    genre: "Tiro em Terceira Pessoa",
     guides: 84,
     activeUsers: 1742,
     characters: 88,
     rarity: 5,
-    status: "Hot",
+    status: "Popular",
     accent: "pink",
     image: null,
     blurb: "Ação intensa, personagens marcantes e coleção pesada.",
@@ -77,12 +77,12 @@ const games: Game[] = [
     id: 5,
     name: "Blue Archive",
     developer: "Nexon",
-    genre: "Strategy RPG",
+    genre: "RPG de Estratégia",
     guides: 66,
     activeUsers: 1608,
     characters: 114,
     rarity: 4,
-    status: "Active",
+    status: "Ativo",
     accent: "azure",
     image: null,
     blurb: "Tom leve, elenco enorme e muito conteúdo de comunidade.",
@@ -91,19 +91,28 @@ const games: Game[] = [
     id: 6,
     name: "Arknights",
     developer: "Hypergryph",
-    genre: "Tower Defense",
+    genre: "Defesa de Torres",
     guides: 91,
     activeUsers: 987,
     characters: 102,
     rarity: 5,
-    status: "Classic",
+    status: "Ativo",
     accent: "amber",
     image: null,
     blurb: "Tática, profundidade e uma base de fãs bem dedicada.",
   },
 ];
 
-const categories = ["All", "Action RPG", "Turn-Based RPG", "Strategy RPG", "Third-Person Shooter", "Tower Defense"];
+const categories = [
+  "Todos",
+  "RPG de Ação",
+  "RPG de Turnos",
+  "RPG de Estratégia",
+  "Tiro em Terceira Pessoa",
+  "Defesa de Torres",
+];
+
+const navItems = ["Início", "Jogos", "Guias", "Eventos", "Comunidade"];
 
 const stats = [
   { label: "Jogos catalogados", value: "42" },
@@ -111,9 +120,27 @@ const stats = [
   { label: "Usuários ativos", value: "18.620" },
 ];
 
+const statusClass: Record<string, string> = {
+  Tendência: "trending",
+  Popular: "popular",
+  Novo: "new",
+  Ativo: "active",
+};
+
+function StarRow({ count }: { count: number }) {
+  return (
+    <div className="star-row">
+      {Array.from({ length: count }, (_, i) => (
+        <span key={i}>★</span>
+      ))}
+    </div>
+  );
+}
+
 function App() {
   const [query, setQuery] = useState("");
-  const [category, setCategory] = useState("All");
+  const [category, setCategory] = useState("Todos");
+  const [activeNav, setActiveNav] = useState("Início");
 
   const filteredGames = useMemo<Game[]>(() => {
     const q = query.trim().toLowerCase();
@@ -125,7 +152,7 @@ function App() {
         game.developer.toLowerCase().includes(q) ||
         game.genre.toLowerCase().includes(q);
 
-      const matchesCategory = category === "All" || game.genre === category;
+      const matchesCategory = category === "Todos" || game.genre === category;
 
       return matchesQuery && matchesCategory;
     });
@@ -138,27 +165,42 @@ function App() {
       <header className="topbar">
         <div>
           <div className="brand">GACHANOMICON</div>
-          <p className="brand-subtitle">
-            Banco de dados, guias e comunidades com alma de banner de gacha.
-          </p>
+          <p className="brand-subtitle">Banco de dados, guias e comunidade.</p>
         </div>
 
         <div className="topbar-actions">
-          <div className="pill">Beta / TCC</div>
-          <div className="pill pill-glow">Community-powered</div>
+          <div className="resource-bar">
+            <div className="resource-pill cyan">
+              <span>Alpha</span>
+            </div>
+          </div>
+          <div className="pill pill-glow">Inscreva-se</div>
         </div>
       </header>
 
+      <nav className="gacha-nav">
+        {navItems.map((item) => (
+          <button
+            key={item}
+            type="button"
+            className={`nav-item ${activeNav === item ? "active" : ""}`}
+            onClick={() => setActiveNav(item)}
+          >
+            {item}
+          </button>
+        ))}
+      </nav>
+
       <section className="hero">
         <div className="hero-copy">
-          <span className="hero-kicker">Coleção. Guias. Comunidade.</span>
+          <div className="section-label">◆ Coleção &middot; Guias &middot; Comunidade</div>
           <h1>
-            Um catálogo de gachas com cara de
-            <span> tela de summon</span>.
+            Tudo de gacha.
+            <span>Um só lugar.</span>
           </h1>
           <p className="hero-text">
-            A proposta é organizar jogos, guias e atividade da comunidade em uma
-            experiência visual que já fala a língua do público.
+            Participe da comunidade, crie e avalie guias, e contribua para o
+            banco de dados de jogos gacha.
           </p>
 
           <div className="hero-stats">
@@ -171,12 +213,16 @@ function App() {
           </div>
         </div>
 
-        <div className={`featured-card accent-${featured.accent}`}>
-          <div className="featured-badge">{featured.status}</div>
+        <div className={`featured-card accent-${featured.accent} rarity-${featured.rarity}`}>
+          <div className="banner-header">
+            <div className="section-label">◆ BANNER ATUAL</div>
+            <div className="banner-limited">LIMITADO</div>
+          </div>
+
           <div className="featured-art">
             <div className="art-glow" />
             <div className="art-banner">
-              <span>{featured.rarity}★</span>
+              <StarRow count={featured.rarity} />
               <strong>{featured.name}</strong>
               <p>{featured.genre}</p>
             </div>
@@ -196,14 +242,22 @@ function App() {
               <strong>{featured.activeUsers}</strong>
             </div>
           </div>
+
+          <div className="banner-pity">
+            <span className="pity-label">Pity 43/90</span>
+            <div className="pity-bar">
+              <div className="pity-fill" style={{ width: "47%" }} />
+            </div>
+            <span className="pity-label dim">⏱ 28d restantes</span>
+          </div>
         </div>
       </section>
 
       <section className="panel">
         <div className="panel-head">
           <div>
+            <div className="section-label">◆ BIBLIOTECA</div>
             <h2>Jogos populares</h2>
-            <p>Cards com dados falsos para demonstrar a estrutura do produto.</p>
           </div>
 
           <label className="search">
@@ -211,7 +265,8 @@ function App() {
             <input
               value={query}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setQuery(e.target.value)}
+                setQuery(e.target.value)
+              }
               placeholder="Pesquisar jogo, gênero ou desenvolvedora"
             />
           </label>
@@ -232,10 +287,12 @@ function App() {
 
         <div className="grid">
           {filteredGames.map((game) => (
-            <article key={game.id} className={`game-card accent-${game.accent}`}>
+            <article
+              key={game.id}
+              className={`game-card accent-${game.accent} rarity-${game.rarity}`}
+            >
               <div className="card-top">
                 <div className="card-art">
-                  <div className="card-rarity">{game.rarity}★</div>
                   <div className="card-image">
                     {game.image ? (
                       <img src={game.image} alt={game.name} />
@@ -248,7 +305,14 @@ function App() {
                 </div>
 
                 <div className="card-info">
-                  <div className="card-status">{game.status}</div>
+                  <div
+                    className={`card-status status-${
+                      statusClass[game.status] ?? "default"
+                    }`}
+                  >
+                    {game.status}
+                  </div>
+                  <StarRow count={game.rarity} />
                   <h3>{game.name}</h3>
                   <p className="card-blurb">{game.blurb}</p>
 
@@ -266,7 +330,7 @@ function App() {
                 </div>
                 <div>
                   <strong>{game.activeUsers}</strong>
-                  <span>Ativos</span>
+                  <span>Jogadores</span>
                 </div>
                 <div>
                   <strong>{game.characters}</strong>
@@ -279,7 +343,7 @@ function App() {
                   Ver detalhes
                 </button>
                 <button type="button" className="primary-btn">
-                  Abrir comunidade
+                  Ver guias →
                 </button>
               </div>
             </article>
